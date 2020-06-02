@@ -7,13 +7,17 @@ Progress So Far
 - Map
 - Terrain
 - Obstacles
-- Controls
+- Movement Controls
 - Collision on all the above
+- Trees
+- Animation
+- Attack Controls
 
 TODO
 ----
-- Trees
-- Animation
 - GUI
 - Monsters
+- Damage and Death
+- Using Items
+- Score System
 - And much more as I go 
