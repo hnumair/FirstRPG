@@ -12,10 +12,11 @@ Progress So Far
 - Trees
 - Animation
 - Attack Controls
+- GUI
 
 TODO
 ----
-- GUI
+
 - Monsters
 - Damage and Death
 - Using Items
