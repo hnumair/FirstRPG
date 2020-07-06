@@ -13,12 +13,13 @@ Progress So Far
 - Animation
 - Attack Controls
 - GUI
+- Monsters
+- Combat System
 
 TODO
 ----
-
-- Monsters
-- Damage and Death
 - Using Items
 - Score System
+- Quests
+- Music and sound effects
 - And much more as I go 
