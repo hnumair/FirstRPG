@@ -15,11 +15,12 @@ Progress So Far
 - GUI
 - Monsters
 - Combat System
+- Using Potions
 
 TODO
 ----
-- Using Items
 - Score System
 - Quests
 - Music and sound effects
+- Menu
 - And much more as I go 

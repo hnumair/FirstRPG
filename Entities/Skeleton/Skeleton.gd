@@ -25,6 +25,9 @@ var attack_damage = 10
 var attack_cooldown_time =  1500
 var next_attack_time = 0
 
+# Reference to potion scene
+var potion_scene = preload("res://Entities/Potion/Potion.tscn")
+
 signal death
 
 func _ready():
@@ -138,6 +141,13 @@ func hit(damage):
 		other_animation_playing = true
 		$AnimatedSprite.play("death")
 		emit_signal("death")
+		
+		# 80% potion drop probability
+		if rng.randf() <= 0.8:
+			var potion = potion_scene.instance() 
+			potion.type = rng.randi() % 2
+			get_tree().root.get_node("Root").call_deferred("add_child", potion)
+			potion.position = position
 
 func _on_AnimatedSprite_frame_changed():
 	if $AnimatedSprite.animation.ends_with("_attack") and $AnimatedSprite.frame == 1:

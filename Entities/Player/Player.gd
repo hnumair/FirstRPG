@@ -13,6 +13,11 @@ var mana = 100
 var mana_max = 100
 var mana_regen = 2
 
+# Player inventory
+enum Potion {HEALTH, MANA}
+var health_potions = 0
+var mana_potions = 0
+
 # Attack Variables
 var attack_cooldown_time = 1000
 var next_attack_time = 0
@@ -112,7 +117,16 @@ func _input(event):
 			$Sprite.play(animation)
 			# Add cooldown time to current time
 			next_fireball_time = now + fireball_cooldown_time
-	
+	elif event.is_action_pressed("drink_health"):
+		if health_potions > 0:
+			health_potions -= 1
+			health = min(health + 50, health_max) 
+			emit_signal("player_stats_changed", self)
+	elif event.is_action_pressed("drink_mana"):
+		if mana_potions > 0:
+			mana_potions -= 1
+			mana = min(mana + 50, mana_max)
+			emit_signal("player_stats_changed", self)
 
 
 func _on_Sprite_animation_finished():
@@ -151,3 +165,10 @@ func hit(damage):
 		$AnimationPlayer.play("Game Over")
 	else:
 		$AnimationPlayer.play("Hit")
+
+func add_potion(type):
+	if type == Potion.HEALTH:
+		health_potions += 1
+	else:
+		mana_potions += 1
+	emit_signal("player_stats_changed", self)

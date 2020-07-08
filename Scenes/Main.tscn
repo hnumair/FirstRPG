@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Entities/Player/player_down_idle_2.png" type="Texture" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
@@ -39,6 +39,9 @@
 [ext_resource path="res://Fonts/Font.tres" type="DynamicFont" id=37]
 [ext_resource path="res://GUI/potions.png" type="Texture" id=38]
 [ext_resource path="res://Entities/SkeletonSpawner/SkeletonSpawner.tscn" type="PackedScene" id=39]
+[ext_resource path="res://GUI/HealthPotions.gd" type="Script" id=40]
+[ext_resource path="res://GUI/ManaPotions.gd" type="Script" id=41]
+[ext_resource path="res://Entities/Potion/Potion.tscn" type="PackedScene" id=42]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -52,15 +55,15 @@ animations = [ {
 "name": "left_walk",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 24 ), ExtResource( 23 ), ExtResource( 14 ) ],
-"loop": false,
-"name": "up_attack",
-"speed": 7.0
-}, {
 "frames": [ ExtResource( 16 ), ExtResource( 12 ), ExtResource( 16 ), ExtResource( 27 ) ],
 "loop": true,
 "name": "right_walk",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 24 ), ExtResource( 23 ), ExtResource( 14 ) ],
+"loop": false,
+"name": "up_attack",
+"speed": 7.0
 }, {
 "frames": [ ExtResource( 16 ), ExtResource( 20 ) ],
 "loop": true,
@@ -126,7 +129,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5, 7.00001 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Game Over"
 tracks/0/type = "value"
 tracks/0/path = NodePath("../CanvasLayer/GameOver:modulate")
@@ -141,8 +144,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Hit"
+[sub_resource type="Animation" id=4]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -167,7 +169,6 @@ script = ExtResource( 2 )
 [node name="Sprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 1 )
 animation = "down_idle"
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -183,8 +184,8 @@ enabled = true
 cast_to = Vector2( 0, 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
-"anims/Game Over" = SubResource( 4 )
-anims/Hit = SubResource( 3 )
+"anims/Game Over" = SubResource( 3 )
+anims/Hit = SubResource( 4 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -296,6 +297,7 @@ margin_top = 158.0
 margin_right = 279.0
 margin_bottom = 178.0
 color = Color( 0, 0, 0, 0.627451 )
+script = ExtResource( 40 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -314,6 +316,9 @@ margin_bottom = 16.0
 custom_fonts/font = ExtResource( 37 )
 text = "0"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ManaPotions" type="ColorRect" parent="CanvasLayer"]
 margin_left = 281.0
@@ -321,6 +326,7 @@ margin_top = 158.0
 margin_right = 317.0
 margin_bottom = 178.0
 color = Color( 0, 0, 0, 0.627451 )
+script = ExtResource( 41 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -364,6 +370,15 @@ align = 1
 valign = 1
 
 [node name="SkeletonSpawner" parent="." instance=ExtResource( 39 )]
+
+[node name="Potion" parent="." instance=ExtResource( 42 )]
+position = Vector2( 87, 44 )
+
+[node name="Potion2" parent="." instance=ExtResource( 42 )]
+position = Vector2( 156, 64 )
+type = 1
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Health" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Mana" method="_on_Player_player_stats_changed"]
+[connection signal="player_stats_changed" from="Player" to="CanvasLayer/HealthPotions" method="_on_Player_player_stats_changed"]
+[connection signal="player_stats_changed" from="Player" to="CanvasLayer/ManaPotions" method="_on_Player_player_stats_changed"]
 [connection signal="animation_finished" from="Player/Sprite" to="Player" method="_on_Sprite_animation_finished"]
