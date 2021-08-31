@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  describeEC21: 
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://numair
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      Role: "arn:aws:iam::712841247589:role/lambdaRole"
+      Events:
+        logEC2State1:
+          Type: AWS::Events::Rule
+          Properties:
+            EventPattern: 
+              source:
+                - "aws.ec2"
+              detail:
+                state:
+                  - running
+                  - terminated
+                  - stopped
+                  - pending
+
+
+      
