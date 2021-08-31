@@ -20,7 +20,7 @@ Resources:
                   - running
                   - terminated
                   - stopped
-                  - pending
+                  
 
 
       
